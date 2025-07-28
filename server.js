@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-require('dotenv').config({ path: './config/.env' })
+require('dotenv').config()
 const PORT = process.env.PORT
 const ConnectDB = require('./config/connectDB')
 const UserRoutes=require('./Routes/UserRoutes')
