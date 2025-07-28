@@ -12,8 +12,7 @@ app.use(express.json())
 app.use('/user',UserRoutes)
 
 app.use((req,res)=>{
-
-     return res.status(404).send('Not found')
+  return res.status(404).send('Not found')
 })
 
 app.listen(PORT, () => console.log('server is running'))
