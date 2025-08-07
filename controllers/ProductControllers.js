@@ -20,3 +20,26 @@ try {
     return res.status(500).send({ msg: error.message })
 }
 }
+
+exports.DeleteProducts=async(req,res)=>{
+    try {
+        const {id}=req.params
+        await Product.deleteOne({_id:id})
+
+        return res.status(202).send({msg:"Product deleted"})
+    } catch (error) {
+        return res.status(500).send({ msg: error.message })
+    }
+}
+exports.SendOrder=async(req,res)=>{
+    try {
+        const {id}=req.params
+       
+        const product= await Product.findById(id)
+           product.Quantity--
+           product.save()
+        return res.status(202).send({msg:"Order is sent"})
+    } catch (error) {
+        return res.status(500).send({ msg: error.message })
+    }
+}
