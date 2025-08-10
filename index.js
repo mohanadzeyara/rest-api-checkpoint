@@ -10,7 +10,7 @@ const cors=require('cors')
 ConnectDB()
 
 const corsOptions = {
-  origin: 'http://localhost:3000', 
+  origin: process.env.FonrtURL, 
   methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE'], 
   allowedHeaders: ['Content-Type', 'Authorization'], 
   credentials: true, 
