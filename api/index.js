@@ -27,6 +27,6 @@ app.use('/product', ProductRoutes);
 app.use((req, res) => res.status(404).send('Not found'));
 
 module.exports = async (req, res) => {
-  await initDB();
-  return app(req, res);
+  await ConnectDB();
+  app(req, res); 
 };
