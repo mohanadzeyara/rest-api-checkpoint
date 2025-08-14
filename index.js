@@ -1,33 +1,34 @@
 const express = require('express')
 const app = express()
 require('dotenv').config()
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3000
 const ConnectDB = require('./config/connectDB')
-const UserRoutes=require('./Routes/UserRoutes')
-const ProductRoutes= require('./Routes/ProductRoutes')
-const cors=require('cors')
+const UserRoutes = require('./Routes/UserRoutes')
+const ProductRoutes = require('./Routes/ProductRoutes')
+const cors = require('cors')
 
 ConnectDB()
 
 const corsOptions = {
-  origin: process.env.FonrtURL, 
-  methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE'], 
-  allowedHeaders: ['Content-Type', 'Authorization'], 
-  credentials: true, 
-};
-
-app.use(cors(corsOptions));
+  origin: process.env.FonrtURL,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}
+app.use(cors(corsOptions))
 
 app.use(express.json())
-app.use("/uploads",express.static(__dirname+"/uploads"))
+app.use('/uploads', express.static(__dirname + '/uploads'))
 
-// Routes =>
-app.use('/user',UserRoutes)
-app.use('/product',ProductRoutes)
+app.use('/user', UserRoutes)
+app.use('/product', ProductRoutes)
 
-// NOT FOUND
-app.use((req,res)=>{
+app.use((req, res) => {
   return res.status(404).send('Not found')
 })
 
-app.listen(PORT, () => console.log('server is running'))
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+}
+
+module.exports = app
