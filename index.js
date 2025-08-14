@@ -1,18 +1,22 @@
-const express = require('express')
-const app = express()
-require('dotenv').config()
-const PORT = process.env.PORT
-const ConnectDB = require('./config/connectDB')
-const UserRoutes=require('./Routes/UserRoutes')
+const express = require('express');
+const dotenv = require('dotenv');
+const connectDB = require('./config/connectDB');
 
-ConnectDB()
+dotenv.config();
+connectDB();
 
-app.use(express.json())
+const app = express();
+app.use(express.json());
 
-app.use('/user',UserRoutes)
+// example route
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
 
-app.use((req,res)=>{
-  return res.status(404).send('Not found')
-})
+// your user routes
+app.use('/user', require('./routes/userRoutes')); // adjust path if needed
 
-app.listen(PORT, () => console.log('server is running'))
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
